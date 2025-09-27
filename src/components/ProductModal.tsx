@@ -243,14 +243,14 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product, title }: ProductModa
             <div className="space-y-2">
               <Label htmlFor="category">Catégorie</Label>
               <Select
-                value={formData.category_id || ""}
-                onValueChange={(value) => handleInputChange("category_id", value)}
+                value={formData.category_id || "none"}
+                onValueChange={(value) => handleInputChange("category_id", value === "none" ? "" : value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner une catégorie" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Aucune catégorie</SelectItem>
+                  <SelectItem value="none">Aucune catégorie</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       <div className="flex items-center gap-2">

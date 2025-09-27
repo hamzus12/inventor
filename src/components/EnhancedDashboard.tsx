@@ -49,7 +49,7 @@ const EnhancedDashboard = () => {
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [stockFilter, setStockFilter] = useState<"all" | "low" | "out">("all");
 
   // Computed values
@@ -57,7 +57,7 @@ const EnhancedDashboard = () => {
     return products.filter((product) => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.sku.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = !selectedCategory || product.category_id === selectedCategory;
+      const matchesCategory = selectedCategory === "all" || product.category_id === selectedCategory;
       const matchesStock = stockFilter === "all" || 
                           (stockFilter === "low" && product.quantity <= product.min_stock) ||
                           (stockFilter === "out" && product.quantity === 0);
@@ -335,7 +335,7 @@ const EnhancedDashboard = () => {
                         <SelectValue placeholder="Toutes catégories" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Toutes catégories</SelectItem>
+                        <SelectItem value="all">Toutes catégories</SelectItem>
                         {categories.map((category) => (
                           <SelectItem key={category.id} value={category.id}>
                             <div className="flex items-center gap-2">
